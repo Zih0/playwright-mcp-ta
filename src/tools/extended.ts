@@ -118,4 +118,37 @@ const clearMockApi = defineTool({
   },
 });
 
-export default [mockApi, clearMockApi];
+const setHeaders = defineTool({
+  capability: 'core',
+  schema: {
+    name: 'browser_set_headers',
+    title: 'Set Extra HTTP Headers',
+    description:
+      'Set Extra HTTP Headers for all outgoing requests (key-value pairs, e.g., {"Authorization": "Bearer token", "X-Custom-Header": "value"})',
+    inputSchema: z.object({
+      headers: z
+        .record(z.string())
+        .describe(
+          'Additional HTTP headers to include in all outgoing requests '
+        ),
+    }),
+    type: 'readOnly',
+  },
+  handle: async (context, params) => {
+    const { page } = await context.ensureTab();
+    await page.setExtraHTTPHeaders(params.headers);
+
+    const code = [
+      `// Set Extra HTTP Headers`,
+      `await page.setExtraHTTPHeaders(${JSON.stringify(params.headers)});`,
+    ];
+
+    return {
+      code,
+      captureSnapshot: false,
+      waitForNetwork: false,
+    };
+  },
+});
+
+export default [mockApi, clearMockApi, setHeaders];
