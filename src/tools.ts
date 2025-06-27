@@ -29,7 +29,7 @@ import screenshot from './tools/screenshot.js';
 import testing from './tools/testing.js';
 import vision from './tools/vision.js';
 import wait from './tools/wait.js';
-import mock from './tools/mock.js';
+import extended from './tools/extended.js';
 
 import type { Tool } from './tools/tool.js';
 
@@ -49,7 +49,7 @@ export const snapshotTools: Tool<any>[] = [
   ...testing,
   ...wait(true),
 
-  ...mock,
+  ...extended,
 ];
 
 export const visionTools: Tool<any>[] = [
@@ -67,5 +67,5 @@ export const visionTools: Tool<any>[] = [
   ...vision,
   ...wait(false),
 
-  ...mock,
+  ...extended,
 ];

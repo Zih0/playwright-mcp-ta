@@ -36,11 +36,11 @@ import screenshotTools from '../lib/tools/screenshot.js';
 import testTools from '../lib/tools/testing.js';
 import visionTools from '../lib/tools/vision.js';
 import waitTools from '../lib/tools/wait.js';
-import mockTools from '../lib/tools/mock.js';
+import extendedTools from '../lib/tools/extended.js';
 import { execSync } from 'node:child_process';
 
 const categories = {
-  Mocking: [...mockTools],
+  Extended: [...extendedTools],
   Interactions: [
     ...snapshotTools,
     ...keyboardTools(true),
