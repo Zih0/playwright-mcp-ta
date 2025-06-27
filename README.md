@@ -1,4 +1,6 @@
-## Playwright MCP
+## Playwright MCP for Test Automation
+
+> **Note**: This is a specialized fork of the official [Playwright MCP](https://github.com/microsoft/playwright-mcp) designed for test automation purposes. The original maintainers stated that "_The primary objective of this MCP is to allow for general purpose browsing. Narrow requests for testing and debugging will use a different specialized server._" This fork addresses that need by adding specialized testing features like API mocking, enhanced debugging capabilities, and other test automation tools.
 
 A Model Context Protocol (MCP) server that provides browser automation capabilities using [Playwright](https://playwright.dev). This server enables LLMs to interact with web pages through structured accessibility snapshots, bypassing the need for screenshots or visually-tuned models.
 
@@ -7,8 +9,11 @@ A Model Context Protocol (MCP) server that provides browser automation capabilit
 - **Fast and lightweight**. Uses Playwright's accessibility tree, not pixel-based input.
 - **LLM-friendly**. No vision models needed, operates purely on structured data.
 - **Deterministic tool application**. Avoids ambiguity common with screenshot-based approaches.
+- **Test automation focused**. Includes specialized testing features like API mocking, request interception, and debugging tools.
+- **Extended capabilities**. Additional tools for test scenarios beyond general browsing.
 
 ### Requirements
+
 - Node.js 18 or newer
 - VS Code, Cursor, Windsurf, Claude Desktop or any other MCP client
 
@@ -27,27 +32,12 @@ First, install the Playwright MCP server with your client. A typical configurati
     "playwright": {
       "command": "npx",
       "args": [
-        "@playwright/mcp@latest"
+        "playwright-mcp-ta@latest"
       ]
     }
   }
 }
 ```
-
-[<img src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Server&color=0098FF" alt="Install in VS Code">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D) [<img alt="Install in VS Code Insiders" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Server&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%257B%2522name%2522%253A%2522playwright%2522%252C%2522command%2522%253A%2522npx%2522%252C%2522args%2522%253A%255B%2522%2540playwright%252Fmcp%2540latest%2522%255D%257D)
-
-
-<details><summary><b>Install in VS Code</b></summary>
-
-You can also install the Playwright MCP server using the VS Code CLI:
-
-```bash
-# For VS Code
-code --add-mcp '{"name":"playwright","command":"npx","args":["@playwright/mcp@latest"]}'
-```
-
-After installation, the Playwright MCP server will be available for use with your GitHub Copilot agent in VS Code.
-</details>
 
 <details>
 <summary><b>Install in Cursor</b></summary>
@@ -56,91 +46,6 @@ After installation, the Playwright MCP server will be available for use with you
 
 [![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=playwright&config=eyJjb21tYW5kIjoibnB4IEBwbGF5d3JpZ2h0L21jcEBsYXRlc3QifQ%3D%3D)
 
-#### Or install manually:
-
-Go to `Cursor Settings` -> `MCP` -> `Add new MCP Server`. Name to your liking, use `command` type with the command `npx @playwright/mcp`. You can also verify config or add command like arguments via clicking `Edit`.
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Install in Windsurf</b></summary>
-
-Follow Windsuff MCP [documentation](https://docs.windsurf.com/windsurf/cascade/mcp). Use following configuration:
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Install in Claude Desktop</b></summary>
-
-Follow the MCP install [guide](https://modelcontextprotocol.io/quickstart/user), use following configuration:
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Install in Claude Code</b></summary>
-
-Use the Claude Code CLI to add the Playwright MCP server:
-
-```bash
-claude mcp add playwright npx @playwright/mcp@latest
-```
-</details>
-
-<details>
-<summary><b>Install in Qodo Gen</b></summary>
-
-Open [Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen) chat panel in VSCode or IntelliJ → Connect more tools → + Add new MCP → Paste the following configuration:
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest"
-      ]
-    }
-  }
-}
-```
-
-Click <code>Save</code>.
 </details>
 
 ### Configuration
@@ -150,7 +55,7 @@ Playwright MCP server supports following arguments. They can be provided in the 
 <!--- Options generated by update-readme.js -->
 
 ```
-> npx @playwright/mcp@latest --help
+> npx playwright-mcp-ta@latest --help
   --allowed-origins <origins>  semicolon-separated list of origins to allow the
                                browser to request. Default is to allow all.
   --blocked-origins <origins>  semicolon-separated list of origins to block the
@@ -202,55 +107,13 @@ Playwright MCP server supports following arguments. They can be provided in the 
 
 <!--- End of options generated section -->
 
-### User profile
-
-You can run Playwright MCP with persistent profile like a regular browser (default), or in the isolated contexts for the testing sessions.
-
-**Persistent profile**
-
-All the logged in information will be stored in the persistent profile, you can delete it between sessions if you'd like to clear the offline state.
-Persistent profile is located at the following locations and you can override it with the `--user-data-dir` argument.
-
-```bash
-# Windows
-%USERPROFILE%\AppData\Local\ms-playwright\mcp-{channel}-profile
-
-# macOS
-- ~/Library/Caches/ms-playwright/mcp-{channel}-profile
-
-# Linux
-- ~/.cache/ms-playwright/mcp-{channel}-profile
-```
-
-**Isolated**
-
-In the isolated mode, each session is started in the isolated profile. Every time you ask MCP to close the browser,
-the session is closed and all the storage state for this session is lost. You can provide initial storage state
-to the browser via the config's `contextOptions` or via the `--storage-state` argument. Learn more about the storage
-state [here](https://playwright.dev/docs/auth).
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "@playwright/mcp@latest",
-        "--isolated",
-        "--storage-state={path/to/storage.json}"
-      ]
-    }
-  }
-}
-```
-
 ### Configuration file
 
 The Playwright MCP server can be configured using a JSON configuration file. You can specify the configuration file
 using the `--config` command line option:
 
 ```bash
-npx @playwright/mcp@latest --config path/to/config.json
+npx playwright-mcp-ta@latest --config path/to/config.json
 ```
 
 <details>
@@ -324,79 +187,14 @@ npx @playwright/mcp@latest --config path/to/config.json
     // List of origins to block the browser to request. Origins matching both `allowedOrigins` and `blockedOrigins` will be blocked.
     blockedOrigins?: string[];
   };
- 
+
   /**
    * Do not send image responses to the client.
    */
   noImageResponses?: boolean;
 }
 ```
-</details>
 
-### Standalone MCP server
-
-When running headed browser on system w/o display or from worker processes of the IDEs,
-run the MCP server from environment with the DISPLAY and pass the `--port` flag to enable SSE transport.
-
-```bash
-npx @playwright/mcp@latest --port 8931
-```
-
-And then in MCP client config, set the `url` to the SSE endpoint:
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "url": "http://localhost:8931/sse"
-    }
-  }
-}
-```
-
-<details>
-<summary><b>Docker</b></summary>
-
-**NOTE:** The Docker implementation only supports headless chromium at the moment.
-
-```js
-{
-  "mcpServers": {
-    "playwright": {
-      "command": "docker",
-      "args": ["run", "-i", "--rm", "--init", "--pull=always", "mcr.microsoft.com/playwright/mcp"]
-    }
-  }
-}
-```
-
-You can build the Docker image yourself.
-
-```
-docker build -t mcr.microsoft.com/playwright/mcp .
-```
-</details>
-
-<details>
-<summary><b>Programmatic usage</b></summary>
-
-```js
-import http from 'http';
-
-import { createConnection } from '@playwright/mcp';
-import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
-
-http.createServer(async (req, res) => {
-  // ...
-
-  // Creates a headless Playwright MCP server with SSE transport
-  const connection = await createConnection({ browser: { launchOptions: { headless: true } } });
-  const transport = new SSEServerTransport('/messages', res);
-  await connection.sever.connect(transport);
-
-  // ...
-});
-```
 </details>
 
 ### Tools
@@ -414,7 +212,7 @@ To use Vision Mode, add the `--vision` flag when starting the server:
     "playwright": {
       "command": "npx",
       "args": [
-        "@playwright/mcp@latest",
+        "playwright-mcp-ta@latest",
         "--vision"
       ]
     }
@@ -426,6 +224,34 @@ Vision Mode works best with the computer use models that are able to interact wi
 X Y coordinate space, based on the provided screenshot.
 
 <!--- Tools generated by update-readme.js -->
+
+<details>
+<summary><b>Mocking</b></summary>
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
+- **browser_mock_api**
+  - Title: Mock API responses
+  - Description: Mock API responses by intercepting network requests
+  - Parameters:
+    - `url` (string): URL pattern to match for interception (supports glob and regex patterns)
+    - `method` (string, optional): HTTP method to match (ALL matches any method)
+    - `status` (number, optional): HTTP status code to return
+    - `contentType` (string, optional): Content-Type header for the response
+    - `body` (string): Response body content (typically JSON formatted as a string)
+    - `headers` (object, optional): Additional response headers to include
+  - Read-only: **true**
+
+<!-- NOTE: This has been generated via update-readme.js -->
+
+- **browser_clear_mock_api**
+  - Title: Clear Mock API responses
+  - Description: Clear Mock API responses
+  - Parameters:
+    - `url` (string): URL pattern to remove mocking for. If not provided, all mocks will be cleared
+  - Read-only: **true**
+
+</details>
 
 <details>
 <summary><b>Interactions</b></summary>
@@ -790,6 +616,5 @@ X Y coordinate space, based on the provided screenshot.
   - Read-only: **false**
 
 </details>
-
 
 <!--- End of tools generated section -->

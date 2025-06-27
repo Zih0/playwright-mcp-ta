@@ -19,15 +19,17 @@ import { spawnSync } from 'child_process';
 
 import { test, expect } from './fixtures.js';
 
-import { createConnection } from '@playwright/mcp';
+import { createConnection } from 'playwright-mcp-ta';
 
 test.skip(({ mcpMode }) => mcpMode !== 'extension');
 
-test('does not allow --cdp-endpoint', async ({  startClient }) => {
-  await expect(createConnection({
-    browser: { browserName: 'firefox' },
-    ...({ extension: true })
-  })).rejects.toThrow(/Extension mode is only supported for Chromium browsers/);
+test('does not allow --cdp-endpoint', async ({ startClient }) => {
+  await expect(
+    createConnection({
+      browser: { browserName: 'firefox' },
+      ...{ extension: true },
+    })
+  ).rejects.toThrow(/Extension mode is only supported for Chromium browsers/);
 });
 
 // NOTE: Can be removed when we drop Node.js 18 support and changed to import.meta.filename.
@@ -35,9 +37,13 @@ const __filename = url.fileURLToPath(import.meta.url);
 
 test('does not support --device', async () => {
   const result = spawnSync('node', [
-    path.join(__filename, '../../cli.js'), '--device=Pixel 5', '--extension',
+    path.join(__filename, '../../cli.js'),
+    '--device=Pixel 5',
+    '--extension',
   ]);
   expect(result.error).toBeUndefined();
   expect(result.status).toBe(1);
-  expect(result.stderr.toString()).toContain('Device emulation is not supported with extension mode.');
+  expect(result.stderr.toString()).toContain(
+    'Device emulation is not supported with extension mode.'
+  );
 });

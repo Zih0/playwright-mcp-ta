@@ -1,18 +1,17 @@
 {
-  "name": "@playwright/mcp",
-  "version": "0.0.29",
-  "description": "Playwright Tools for MCP",
+  "name": "playwright-mcp-ta",
+  "version": "0.0.1",
+  "description": "Playwright MCP for Test Automation",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microsoft/playwright-mcp.git"
+    "url": "git+https://github.com/zih0/playwright-mcp-ta.git"
   },
-  "homepage": "https://playwright.dev",
   "engines": {
     "node": ">=18"
   },
   "author": {
-    "name": "Microsoft Corporation"
+    "name": "ziho"
   },
   "license": "Apache-2.0",
   "scripts": {
