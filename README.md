@@ -44,7 +44,7 @@ First, install the Playwright MCP server with your client. A typical configurati
 
 #### Click the button to install:
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=playwright&config=eyJjb21tYW5kIjoibnB4IEBwbGF5d3JpZ2h0L21jcEBsYXRlc3QifQ%3D%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=playwright-ta&config=eyJjb21tYW5kIjoibnB4IC15IHBsYXl3cmlnaHQtbWNwLXRhQGxhdGVzdCIsImVudiI6e319)
 
 </details>
 
@@ -257,7 +257,7 @@ X Y coordinate space, based on the provided screenshot.
   - Title: Set Extra HTTP Headers
   - Description: Set Extra HTTP Headers for all outgoing requests (key-value pairs, e.g., {"Authorization": "Bearer token", "X-Custom-Header": "value"})
   - Parameters:
-    - `headers` (object): Additional HTTP headers to include in all outgoing requests 
+    - `headers` (object): Additional HTTP headers to include in all outgoing requests
   - Read-only: **true**
 
 </details>
@@ -625,6 +625,5 @@ X Y coordinate space, based on the provided screenshot.
   - Read-only: **false**
 
 </details>
-
 
 <!--- End of tools generated section -->
