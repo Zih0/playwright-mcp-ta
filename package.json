@@ -1,6 +1,6 @@
 {
   "name": "playwright-mcp-ta",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Playwright MCP for Test Automation",
   "type": "module",
   "repository": {
